@@ -7,7 +7,6 @@ import javax.persistence.Id;
 @Entity
 public class Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer itemId;
     private Category category;
     private Integer xLQuantity;

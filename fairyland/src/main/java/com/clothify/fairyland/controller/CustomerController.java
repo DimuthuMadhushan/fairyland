@@ -10,10 +10,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
+    int count=0;
     @Autowired
     CustomerRepository customerRepository;
     @PostMapping
     public Customer addCustomer(@RequestBody Customer customer){
+
+        customer.setId(count++);
         customerRepository.save(customer);
         return customer;
     }

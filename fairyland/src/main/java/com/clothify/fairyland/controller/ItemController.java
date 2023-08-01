@@ -13,11 +13,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/item")
 public class ItemController {
+    int count=0;
     private final String FOLDER_PATH="E:/fairyland/fairyland/src/main/resources/images/";
     @Autowired
     ItemRepository itemRepository;
     @PostMapping
     public Item  addItem(@RequestBody Item item){
+        item.setItemId(count++);
         itemRepository.save(item);
         return item;
     }

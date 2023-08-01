@@ -1,6 +1,7 @@
 package com.clothify.fairyland.controller;
 
 import com.clothify.fairyland.entity.Customer;
+import com.clothify.fairyland.entity.OrderDetails;
 import com.clothify.fairyland.entity.Orders;
 import com.clothify.fairyland.repository.CustomerRepository;
 import com.clothify.fairyland.repository.OrderRepository;
@@ -12,6 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
+    int count=0;
+    int index=0;
     @Autowired
     OrderRepository orderRepository;
    @Autowired
@@ -19,12 +22,24 @@ public class OrderController {
 
     @PostMapping("/{custid}")
     public Orders addOrders(@PathVariable(value = "custid")Integer custId,@RequestBody Orders order){
+        order.setId(count++);
+        List<OrderDetails> orderDetails=order.getOrderDetailsList();
+        int i=0;
+        while (i<orderDetails.size()){
+            orderDetails.get(i).setId(index++);
+            i++;
+        }
         orderRepository.save(order);
 
      Customer customer=customerRepository.getCustomerById(custId);
        customer.getOrderList().add(order);
        customerRepository.save(customer);
         return order;
+    }
+    @GetMapping("/{id}")
+    public List<OrderDetails> getOrderDetails(@PathVariable(name = "id")Integer orderId){
+        Orders order= orderRepository.getOrdersById(orderId);
+        return order.getOrderDetailsList();
     }
     @GetMapping
     public List<Orders> getOrdersList(){
