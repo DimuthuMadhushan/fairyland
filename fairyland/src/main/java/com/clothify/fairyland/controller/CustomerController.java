@@ -18,7 +18,7 @@ public class CustomerController {
     CustomerRepository customerRepository;
     @Autowired
     UsersRepository usersRepository;
-    @PostMapping
+    @PostMapping("/add-customer")
     public Customer addCustomer(@RequestBody Customer customer){
         List<Customer> customers=customerRepository.findAll();
         if(customers.isEmpty()){
@@ -31,14 +31,14 @@ public class CustomerController {
         customerRepository.save(customer);
 
         List<Users> users=usersRepository.findAll();
-        usersRepository.save(new Users(users.isEmpty()?1:(users.get(users.size()-1).getId())+1,customer.getUsername(),customer.getPassword(),true,Roles.USER,customer.getId()));
+        usersRepository.save(new Users(users.isEmpty()?1:(users.get(users.size()-1).getId())+1,customer.getUsername(),customer.getPassword(),true,"ROLE_USER",customer.getId()));
         return customer;
     }
-    @GetMapping
+    @GetMapping("/custList")
     public List<Customer> getCustomerList(){
         return customerRepository.findAll();
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public Customer deleteCustomer(@PathVariable(value = "id")Integer custId){
        Customer customer=customerRepository.getCustomerById(custId);
         if(customer!=null){
@@ -46,7 +46,7 @@ public class CustomerController {
         }
         return customer;
     }
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public Customer updateCustomer(@PathVariable(value = "id")Integer custId,@RequestBody Customer customer){
 
         Customer updateCustomer=customerRepository.getCustomerById(custId);

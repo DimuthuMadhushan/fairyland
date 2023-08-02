@@ -1,7 +1,5 @@
 package com.clothify.fairyland.entity;
 
-import com.clothify.fairyland.enumbers.Roles;
-
 import javax.persistence.*;
 
 @Entity
@@ -11,10 +9,10 @@ public class Users {
     private String userName;
     private String passWord;
     private boolean active;
-    private Roles role;
+    private String role;
     private Integer customerId;
 
-    public Users(Integer id, String userName, String passWord, boolean active,Roles role,Integer customerId) {
+    public Users(Integer id, String userName, String passWord, boolean active,String role,Integer customerId) {
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
@@ -58,13 +56,6 @@ public class Users {
         this.active = active;
     }
 
-    public Roles getRole() {
-        return role;
-    }
-
-    public void setRole(Roles role) {
-        this.role = role;
-    }
 
     public Integer getCustomerId() {
         return customerId;
@@ -72,5 +63,13 @@ public class Users {
 
     public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

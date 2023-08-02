@@ -22,7 +22,7 @@ public class OrderController {
    @Autowired
     OrderDetailFRepository orderDetailRepository;
 
-    @PostMapping("/{custid}")
+    @PostMapping("/add/{custid}")
     public Orders addOrders(@PathVariable(value = "custid")Integer custId,@RequestBody Orders order){
         List<Orders>orders=orderRepository.findAll();
         Orders orders1=orders.get(orders.size()-1);
@@ -43,12 +43,12 @@ public class OrderController {
        customerRepository.save(customer);
         return order;
     }
-    @GetMapping("/{id}")
+    @GetMapping("/order-detail/{id}")
     public List<OrderDetails> getOrderDetails(@PathVariable(name = "id")Integer orderId){
         Orders order= orderRepository.getOrdersById(orderId);
         return order.getOrderDetailsList();
     }
-    @GetMapping
+    @GetMapping("/all-orders")
     public List<Orders> getOrdersList(){
         return orderRepository.findAll();
     }

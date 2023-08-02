@@ -17,7 +17,7 @@ public class ItemController {
     private final String FOLDER_PATH="E:/fairyland/fairyland/src/main/resources/images/";
     @Autowired
     ItemRepository itemRepository;
-    @PostMapping
+    @PostMapping("/post")
     public Item  addItem(@RequestBody Item item){
         List<Item>items=itemRepository.findAll();
         Item item1=items.get(items.size()-1);
@@ -36,16 +36,18 @@ public class ItemController {
         return true;
 
     }
-    @GetMapping
+    @GetMapping("/get-all")
     public List<Item> getItems(){
         return itemRepository.findAll();
     }
-    @DeleteMapping("/{id}")
+
+
+    @DeleteMapping("/delete/{id}")
     public Boolean deleteItem(@PathVariable(value = "id")Integer itemId){
         itemRepository.deleteById(itemId);
         return true;
     }
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public Item updateItem(@PathVariable(value = "id")Integer itemId,@RequestBody Item item){
         Item updateItem=itemRepository.getItemByItemId(itemId);
         updateItem.setCategory(item.getCategory());
