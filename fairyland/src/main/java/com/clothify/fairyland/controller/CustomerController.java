@@ -1,7 +1,10 @@
 package com.clothify.fairyland.controller;
 
 import com.clothify.fairyland.entity.Customer;
+import com.clothify.fairyland.entity.Users;
+import com.clothify.fairyland.enumbers.Roles;
 import com.clothify.fairyland.repository.CustomerRepository;
+import com.clothify.fairyland.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,14 +13,25 @@ import java.util.List;
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
-    int count=0;
+
     @Autowired
     CustomerRepository customerRepository;
+    @Autowired
+    UsersRepository usersRepository;
     @PostMapping
     public Customer addCustomer(@RequestBody Customer customer){
+        List<Customer> customers=customerRepository.findAll();
+        if(customers.isEmpty()){
+            customer.setId(1);
+        }else{
+            Customer customer1=customers.get(customers.size()-1);
+            customer.setId(customer1.getId()+1);
+        }
 
-        customer.setId(count++);
         customerRepository.save(customer);
+
+        List<Users> users=usersRepository.findAll();
+        usersRepository.save(new Users(users.isEmpty()?1:(users.get(users.size()-1).getId())+1,customer.getUsername(),customer.getPassword(),true,Roles.USER,customer.getId()));
         return customer;
     }
     @GetMapping
@@ -41,12 +55,10 @@ public class CustomerController {
         updateCustomer.setHomeNumber(customer.getHomeNumber());
         updateCustomer.setLane(customer.getLane());
         updateCustomer.setLastname(customer.getLastname());
-        updateCustomer.setPassword(customer.getPassword());
         updateCustomer.setPhone1(customer.getPhone1());
         updateCustomer.setPhone2(customer.getPhone2());
         updateCustomer.setPostalCode(customer.getPostalCode());
         updateCustomer.setTown(customer.getTown());
-        updateCustomer.setUsername(customer.getUsername());
 
         customerRepository.save(updateCustomer);
         return updateCustomer;

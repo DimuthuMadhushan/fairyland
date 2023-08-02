@@ -4,6 +4,7 @@ import com.clothify.fairyland.entity.Customer;
 import com.clothify.fairyland.entity.OrderDetails;
 import com.clothify.fairyland.entity.Orders;
 import com.clothify.fairyland.repository.CustomerRepository;
+import com.clothify.fairyland.repository.OrderDetailFRepository;
 import com.clothify.fairyland.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,17 +14,23 @@ import java.util.List;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-    int count=0;
-    int index=0;
+
     @Autowired
     OrderRepository orderRepository;
    @Autowired
    CustomerRepository customerRepository;
+   @Autowired
+    OrderDetailFRepository orderDetailRepository;
 
     @PostMapping("/{custid}")
     public Orders addOrders(@PathVariable(value = "custid")Integer custId,@RequestBody Orders order){
-        order.setId(count++);
+        List<Orders>orders=orderRepository.findAll();
+        Orders orders1=orders.get(orders.size()-1);
+        order.setId(orders1.getId()+1);
         List<OrderDetails> orderDetails=order.getOrderDetailsList();
+        List<OrderDetails>orderDetails1=orderDetailRepository.findAll();
+        OrderDetails orderDetails2=orderDetails1.get(orderDetails1.size()-1);
+        int index=orderDetails2.getId()+1;
         int i=0;
         while (i<orderDetails.size()){
             orderDetails.get(i).setId(index++);

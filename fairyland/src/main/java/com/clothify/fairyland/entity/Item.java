@@ -1,8 +1,8 @@
 package com.clothify.fairyland.entity;
 
+import com.clothify.fairyland.enumbers.Category;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 @Entity
 public class Item {
