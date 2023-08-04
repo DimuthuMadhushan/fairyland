@@ -25,16 +25,28 @@ public class OrderController {
     @PostMapping("/add/{custid}")
     public Orders addOrders(@PathVariable(value = "custid")Integer custId,@RequestBody Orders order){
         List<Orders>orders=orderRepository.findAll();
-        Orders orders1=orders.get(orders.size()-1);
-        order.setId(orders1.getId()+1);
+        if(orders.isEmpty()){
+            order.setId(1);
+        }else{
+            Orders orders1=orders.get(orders.size()-1);
+            order.setId(orders1.getId()+1);
+        }
         List<OrderDetails> orderDetails=order.getOrderDetailsList();
         List<OrderDetails>orderDetails1=orderDetailRepository.findAll();
-        OrderDetails orderDetails2=orderDetails1.get(orderDetails1.size()-1);
-        int index=orderDetails2.getId()+1;
-        int i=0;
-        while (i<orderDetails.size()){
-            orderDetails.get(i).setId(index++);
-            i++;
+        if(orderDetails1.isEmpty()){
+            int i=0;
+            while (i<orderDetails.size()){
+
+                orderDetails.get(i).setId(++i);
+            }
+        }else {
+            OrderDetails orderDetails2=orderDetails1.get(orderDetails1.size()-1);
+            int index=orderDetails2.getId()+1;
+            int i=0;
+            while (i<orderDetails.size()){
+                orderDetails.get(i).setId(index++);
+                i++;
+            }
         }
         orderRepository.save(order);
 

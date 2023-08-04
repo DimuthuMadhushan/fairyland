@@ -1,14 +1,17 @@
 package com.clothify.fairyland.controller;
 
 import com.clothify.fairyland.entity.Customer;
+import com.clothify.fairyland.entity.MyUserDetails;
 import com.clothify.fairyland.entity.Users;
 import com.clothify.fairyland.enumbers.Roles;
 import com.clothify.fairyland.repository.CustomerRepository;
 import com.clothify.fairyland.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/customer")
@@ -19,20 +22,26 @@ public class CustomerController {
     @Autowired
     UsersRepository usersRepository;
     @PostMapping("/add-customer")
-    public Customer addCustomer(@RequestBody Customer customer){
+    public String addCustomer(@RequestBody Customer customer){
         List<Customer> customers=customerRepository.findAll();
         if(customers.isEmpty()){
             customer.setId(1);
         }else{
-            Customer customer1=customers.get(customers.size()-1);
-            customer.setId(customer1.getId()+1);
+            for (int i=1;i<customers.size();i++){
+                if (customers.get(i).getUsername().equals(customer.getUsername())){
+                    return "User Already Exist";
+                }  else {
+                    Customer customer1=customers.get(customers.size()-1);
+                    customer.setId(customer1.getId()+1);
+                }
+            }
         }
 
         customerRepository.save(customer);
 
         List<Users> users=usersRepository.findAll();
         usersRepository.save(new Users(users.isEmpty()?1:(users.get(users.size()-1).getId())+1,customer.getUsername(),customer.getPassword(),true,"ROLE_USER",customer.getId()));
-        return customer;
+        return "Done";
     }
     @GetMapping("/custList")
     public List<Customer> getCustomerList(){
@@ -42,6 +51,10 @@ public class CustomerController {
     public Customer deleteCustomer(@PathVariable(value = "id")Integer custId){
        Customer customer=customerRepository.getCustomerById(custId);
         if(customer!=null){
+            Optional<Users> users=usersRepository.findByUserName(customer.getUsername());
+            users.orElseThrow(()->new UsernameNotFoundException("Not Found "));
+            MyUserDetails userDetails=users.map(MyUserDetails::new).get();
+            usersRepository.deleteById(userDetails.getId());
             customerRepository.delete(customer);
         }
         return customer;
