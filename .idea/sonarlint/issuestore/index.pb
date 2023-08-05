@@ -17,7 +17,5 @@ Efairyland/src/main/java/com/clothify/fairyland/enumbers/Category.java,9\c\9c0c
 Qfairyland/src/main/java/com/clothify/fairyland/repository/CustomerRepository.java,9\2\923c7de0d4784080294770da5869b8f917d7da9e
 r
 Bfairyland/src/main/java/com/clothify/fairyland/enumbers/Roles.java,2\d\2d8f60647f851c0b720c96fb8f353a52ebbf2465
-A
-fairyland/pom.xml,b\e\be84281283243a2a97089c45aa2a69a77ccc6ab1
 o
 ?fairyland/src/main/java/com/clothify/fairyland/entity/Item.java,6\c\6c96d08cc614984e263c71d8e4204dc2fe439ff9
