@@ -6,6 +6,7 @@ import java.util.List;
 @Entity
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String firstname;
     private String lastname;
@@ -14,9 +15,9 @@ public class Customer {
     private String homeNumber;
     private String lane;
     private String town;
-    private Integer postalCode;
-    private Integer phone1;
-    private Integer phone2;
+    private String postalCode;
+    private String phone1;
+    private String phone2;
     private String username;
     private String password;
 
@@ -81,29 +82,6 @@ public class Customer {
         this.town = town;
     }
 
-    public Integer getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(Integer postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public Integer getPhone1() {
-        return phone1;
-    }
-
-    public void setPhone1(Integer phone1) {
-        this.phone1 = phone1;
-    }
-
-    public Integer getPhone2() {
-        return phone2;
-    }
-
-    public void setPhone2(Integer phone2) {
-        this.phone2 = phone2;
-    }
 
     public List<Orders> getOrderList() {
        return ordersList;
@@ -127,5 +105,29 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getPhone1() {
+        return phone1;
+    }
+
+    public void setPhone1(String phone1) {
+        this.phone1 = phone1;
+    }
+
+    public String getPhone2() {
+        return phone2;
+    }
+
+    public void setPhone2(String phone2) {
+        this.phone2 = phone2;
     }
 }

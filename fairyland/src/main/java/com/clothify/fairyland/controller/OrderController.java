@@ -22,8 +22,8 @@ public class OrderController {
    @Autowired
     OrderDetailFRepository orderDetailRepository;
 
-    @PostMapping("/add/{custid}")
-    public Orders addOrders(@PathVariable(value = "custid")Integer custId,@RequestBody Orders order){
+    @PostMapping("/add/{userName}")
+    public Orders addOrders(@PathVariable(value = "userName")String userName,@RequestBody Orders order){
         List<Orders>orders=orderRepository.findAll();
         if(orders.isEmpty()){
             order.setId(1);
@@ -50,7 +50,7 @@ public class OrderController {
         }
         orderRepository.save(order);
 
-     Customer customer=customerRepository.getCustomerById(custId);
+     Customer customer=customerRepository.getCustomerByUsername(userName);
        customer.getOrderList().add(order);
        customerRepository.save(customer);
         return order;

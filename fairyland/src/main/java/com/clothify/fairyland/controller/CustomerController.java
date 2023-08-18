@@ -22,26 +22,20 @@ public class CustomerController {
     @Autowired
     UsersRepository usersRepository;
     @PostMapping("/add-customer")
-    public String addCustomer(@RequestBody Customer customer){
+    public Boolean addCustomer(@RequestBody Customer customer){
         List<Customer> customers=customerRepository.findAll();
-        if(customers.isEmpty()){
-            customer.setId(1);
-        }else{
-            for (int i=1;i<customers.size();i++){
-                if (customers.get(i).getUsername().equals(customer.getUsername())){
-                    return "User Already Exist";
-                }  else {
-                    Customer customer1=customers.get(customers.size()-1);
-                    customer.setId(customer1.getId()+1);
-                }
+
+        for (Customer value : customers) {
+            if (value.getUsername().equals(customer.getUsername())) {
+                return false;
             }
         }
 
         customerRepository.save(customer);
 
         List<Users> users=usersRepository.findAll();
-        usersRepository.save(new Users(users.isEmpty()?1:(users.get(users.size()-1).getId())+1,customer.getUsername(),customer.getPassword(),true,"ROLE_USER",customer.getId()));
-        return "Done";
+        usersRepository.save(new Users(customer.getUsername(),customer.getPassword(),true,"ROLE_USER",customer.getId()));
+        return true;
     }
     @GetMapping("/custList")
     public List<Customer> getCustomerList(){
