@@ -41,6 +41,10 @@ public class CustomerController {
     public List<Customer> getCustomerList(){
         return customerRepository.findAll();
     }
+    @GetMapping("/detail/{username}")
+    public Customer getCustomer(@PathVariable(value = "username")String username){
+        return customerRepository.getCustomerByUsername(username);
+    }
     @DeleteMapping("/delete/{id}")
     public Customer deleteCustomer(@PathVariable(value = "id")Integer custId){
        Customer customer=customerRepository.getCustomerById(custId);
@@ -53,10 +57,10 @@ public class CustomerController {
         }
         return customer;
     }
-    @PutMapping("/update/{id}")
-    public Customer updateCustomer(@PathVariable(value = "id")Integer custId,@RequestBody Customer customer){
+    @PutMapping("/update/{userName}")
+    public Customer updateCustomer(@PathVariable(value = "userName")String username,@RequestBody Customer customer){
 
-        Customer updateCustomer=customerRepository.getCustomerById(custId);
+        Customer updateCustomer=customerRepository.getCustomerByUsername(username);
         updateCustomer.setEmail(customer.getEmail());
         updateCustomer.setFirstname(customer.getFirstname());
         updateCustomer.setHomeNumber(customer.getHomeNumber());

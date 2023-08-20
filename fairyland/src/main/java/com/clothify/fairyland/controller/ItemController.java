@@ -19,14 +19,6 @@ public class ItemController {
     ItemRepository itemRepository;
     @PostMapping("/post")
     public Item  addItem(@RequestBody Item item){
-        List<Item>items=itemRepository.findAll();
-        if(items.isEmpty()){
-            item.setItemId(1);
-        }else{
-            Item item1=items.get(items.size()-1);
-            item.setItemId(item1.getItemId()+1);
-        }
-
         itemRepository.save(item);
         return item;
     }

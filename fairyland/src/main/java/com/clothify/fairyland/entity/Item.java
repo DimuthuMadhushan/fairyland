@@ -3,10 +3,13 @@ package com.clothify.fairyland.entity;
 import com.clothify.fairyland.enumbers.Category;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 @Entity
 public class Item {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer itemId;
     private Category category;
     private Integer xLQuantity;
@@ -16,6 +19,7 @@ public class Item {
     private String description;
     private Double unitPrice;
     private String imgUrl;
+    private  String tittle;
 
 
 
@@ -90,6 +94,14 @@ public class Item {
 
     public void setItemId(Integer itemId) {
         this.itemId = itemId;
+    }
+
+    public String getTittle() {
+        return tittle;
+    }
+
+    public void setTittle(String tittle) {
+        this.tittle = tittle;
     }
 }
 
