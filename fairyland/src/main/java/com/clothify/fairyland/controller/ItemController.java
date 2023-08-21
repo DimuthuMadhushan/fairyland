@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/item")
 public class ItemController {
 
-    private final String FOLDER_PATH="E:/fairyland/fairyland/src/main/resources/images/";
+    private final String FOLDER_PATH="../resources/images";
     @Autowired
     ItemRepository itemRepository;
     @PostMapping("/post")
