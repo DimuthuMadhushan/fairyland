@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -37,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/item/post").hasRole("ADMIN")
                 .antMatchers("/item/addimage").hasRole("ADMIN")
                 .antMatchers("/item/delete/{id}").hasRole("ADMIN")
-                .antMatchers("item/update/{id}").hasRole("ADMIN")
+                .antMatchers("/item/update/{id}").hasRole("ADMIN")
                 .antMatchers("/orders/order-detail/{id}").hasRole("ADMIN")
                 .antMatchers("/orders/all-orders").hasRole("ADMIN")
                 .antMatchers("/customer/custList").hasAnyRole("ADMIN")
@@ -48,6 +47,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/customer/add-customer").permitAll()
                 .antMatchers("/item/get-all").permitAll()
                 .antMatchers("/authenticate").permitAll()
+                .antMatchers("/item/getimage/{filename}").permitAll()
+                .antMatchers("/item/getItem/{id}").permitAll()
                 .anyRequest().authenticated().and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

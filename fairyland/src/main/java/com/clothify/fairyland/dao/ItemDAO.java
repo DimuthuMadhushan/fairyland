@@ -1,40 +1,17 @@
-package com.clothify.fairyland.entity;
+package com.clothify.fairyland.dao;
 
 import com.clothify.fairyland.enumbers.Category;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-@Entity
-public class Item {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer itemId;
+public class ItemDAO {
     private Category category;
     private Integer xLQuantity;
-
-    public Item(){}
-
-    public Item(Category category, Integer xLQuantity, Integer lQuantity, Integer mQuantity, Integer sQuantity, Double unitPrice, String imgUrl, String tittle) {
-        this.category = category;
-        this.xLQuantity = xLQuantity;
-        this.lQuantity = lQuantity;
-        this.mQuantity = mQuantity;
-        this.sQuantity = sQuantity;
-        this.unitPrice = unitPrice;
-        this.imgUrl = imgUrl;
-        this.tittle = tittle;
-    }
-
     private Integer lQuantity;
     private Integer mQuantity;
     private Integer sQuantity;
     private Double unitPrice;
-    private String imgUrl;
     private  String tittle;
-
-
+    private MultipartFile image;
 
     public Category getCategory() {
         return category;
@@ -84,22 +61,6 @@ public class Item {
         this.unitPrice = unitPrice;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public Integer getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(Integer itemId) {
-        this.itemId = itemId;
-    }
-
     public String getTittle() {
         return tittle;
     }
@@ -107,5 +68,12 @@ public class Item {
     public void setTittle(String tittle) {
         this.tittle = tittle;
     }
-}
 
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
+}

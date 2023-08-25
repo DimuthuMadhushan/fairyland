@@ -8,9 +8,10 @@ import java.util.List;
 
 public class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Date date;
+    private String orderStatus="Not delivered";
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id" ,referencedColumnName = "id")
     private List<OrderDetails>orderDetailsList;
@@ -39,5 +40,13 @@ public class Orders {
 
     public void setOrderDetailsList(List<OrderDetails> orderDetailsList) {
         this.orderDetailsList = orderDetailsList;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

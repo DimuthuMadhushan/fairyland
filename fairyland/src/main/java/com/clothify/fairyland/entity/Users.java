@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Users {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String userName;
     private String passWord;
@@ -14,7 +14,7 @@ public class Users {
     private Integer customerId;
 
     public Users( String userName, String passWord, boolean active,String role,Integer customerId) {
-        this.id = id;
+
         this.userName = userName;
         this.passWord = passWord;
         this.active = active;
