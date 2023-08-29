@@ -50,9 +50,9 @@ public class OrderController {
         }
         orderRepository.save(order);
 
-     Customer customer=customerRepository.getCustomerByUsername(userName);
-       customer.getOrderList().add(order);
-       customerRepository.save(customer);
+        Customer customer=customerRepository.getCustomerByUsername(userName);
+        customer.getOrderList().add(order);
+        customerRepository.save(customer);
         return order;
     }
     @GetMapping("/order-detail/{id}")
@@ -71,10 +71,12 @@ public class OrderController {
         return orders;
     }
     @PutMapping("/{id}")
-    public  Orders updateOrders(@PathVariable(value="id")Integer orderId,@RequestBody Orders orders){
-        Orders updateOrder=orderRepository.getOrdersById(orderId);
-        updateOrder.setDate(orders.getDate());
-        orderRepository.save(updateOrder);
-        return  updateOrder;
+    public  Boolean updateOrders(@PathVariable(value="id")Integer orderId){
+        Orders orders=orderRepository.getOrdersById(orderId);
+        if(orders.getOrderStatus().equals("Not delivered")){
+            orders.setOrderStatus("Delivered");
+            return true;
+        }
+        return false;
     }
 }

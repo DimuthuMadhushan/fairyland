@@ -16,6 +16,15 @@ public class Orders {
     @JoinColumn(name = "order_id" ,referencedColumnName = "id")
     private List<OrderDetails>orderDetailsList;
 
+    public Orders(Date date, String orderStatus, List<OrderDetails> orderDetailsList) {
+        this.date = date;
+        this.orderStatus = orderStatus;
+        this.orderDetailsList = orderDetailsList;
+    }
+
+    public Orders() {
+
+    }
 
     public Date getDate() {
         return date;

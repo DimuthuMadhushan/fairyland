@@ -3,7 +3,6 @@ package com.clothify.fairyland.controller;
 import com.clothify.fairyland.entity.Customer;
 import com.clothify.fairyland.entity.MyUserDetails;
 import com.clothify.fairyland.entity.Users;
-import com.clothify.fairyland.enumbers.Roles;
 import com.clothify.fairyland.repository.CustomerRepository;
 import com.clothify.fairyland.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +43,11 @@ public class CustomerController {
     @GetMapping("/detail/{username}")
     public Customer getCustomer(@PathVariable(value = "username")String username){
         return customerRepository.getCustomerByUsername(username);
+    }
+    @GetMapping("/custname/{id}")
+    public String getCustName(@PathVariable(value = "id")Integer id){
+        Customer customer=customerRepository.getCustomerById(id);
+        return customer.getUsername();
     }
     @DeleteMapping("/delete/{id}")
     public Customer deleteCustomer(@PathVariable(value = "id")Integer custId){
